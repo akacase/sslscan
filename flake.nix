@@ -33,8 +33,8 @@
           nativeBuildInputs = old.nativeBuildInputs ++ [ final.pkgs.zlib ];
         });
 
-        sslscan-zlib = with final; (stdenv.mkDerivation {
-          name = "sslscan-zlib";
+        sslscan = with final; (stdenv.mkDerivation {
+          name = "sslscan";
           src = sslscan-src;
           nativeBuildInputs = [ gnumake gcc ];
           buildInputs = [ openssl-zlib glibc ];
@@ -45,7 +45,7 @@
 
           installPhase = ''
             mkdir -p $out/bin
-            cp sslscan $out/bin/sslscan-zlib
+            cp sslscan $out/bin/sslscan
           '';
 
           meta = with lib; {
