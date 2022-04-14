@@ -34,7 +34,7 @@
     {
       overlay = final: prev: {
         sslscan-zlib = with final; (stdenv.mkDerivation {
-          name = "sslscan";
+          name = "sslscan-zlib";
           src = sslscan-src;
           nativeBuildInputs = [ gnumake gcc ];
           buildInputs = [ openssl glibc ];
@@ -49,7 +49,7 @@
           '';
 
           meta = with lib; {
-            description = " sslscan tests SSL/TLS enabled services to discover supported cipher suites";
+            description = "sslscan tests SSL/TLS enabled services to discover supported cipher suites";
             homepage = https://github.com/rbsec/sslscan;
             license = licenses.gpl3Only;
             maintainers = with maintainers; [ case ];
