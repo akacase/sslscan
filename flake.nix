@@ -22,11 +22,10 @@
           overlays = [
             self.overlay
             (final: prev: {
-              openssl = prev.openssl.override {
-                configureScript = prev.configureScript // { x86_64-linux = "./Configure linux-x86_64 zlib";};
-                #configureFlags = prev.configureFlags ++ [ "zlib" ];
-                buildInputs = prev.buildInputs ++ [ final.pkgs.zlib ];
-              };
+              openssl = prev.openssl.overrideAttrs (old: {
+                configureFlags = old.configureFlags ++ [ "-D_FORTIFY_SOURCE=2" "-fPIC" "enable-weak-ssl-ciphers" "zlib" ];
+                nativeBuildInputs = old.nativeBuildInputs ++ [ final.pkgs.zlib ];
+              });
             })
           ];
         }
@@ -73,6 +72,9 @@
             glibc
             zlib
           ];
+          shellHook = ''
+            ln -s "${sslscan-src}" ./src
+          '';
         });
     };
 }
