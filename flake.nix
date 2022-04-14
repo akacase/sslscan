@@ -21,18 +21,18 @@
 
           overlays = [
             self.overlay
-            (final: prev: {
-              openssl = prev.openssl.overrideAttrs (old: {
-                configureFlags = old.configureFlags ++ [ "-D_FORTIFY_SOURCE=2" "-fPIC" "enable-weak-ssl-ciphers" "zlib" ];
-                nativeBuildInputs = old.nativeBuildInputs ++ [ final.pkgs.zlib ];
-              });
-            })
           ];
         }
       );
     in
     {
       overlay = final: prev: {
+
+        openssl = prev.openssl.overrideAttrs (old: {
+          configureFlags = old.configureFlags ++ [ "-D_FORTIFY_SOURCE=2" "-fPIC" "enable-weak-ssl-ciphers" "zlib" ];
+          nativeBuildInputs = old.nativeBuildInputs ++ [ final.pkgs.zlib ];
+        });
+
         sslscan-zlib = with final; (stdenv.mkDerivation {
           name = "sslscan-zlib";
           src = sslscan-src;
