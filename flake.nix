@@ -33,7 +33,7 @@
     in
     {
       overlay = final: prev: {
-        sslscan = with final; (stdenv.mkDerivation {
+        sslscan-zlib = with final; (stdenv.mkDerivation {
           name = "sslscan";
           src = sslscan-src;
           nativeBuildInputs = [ gnumake gcc ];
@@ -51,17 +51,17 @@
           meta = with lib; {
             description = " sslscan tests SSL/TLS enabled services to discover supported cipher suites";
             homepage = https://github.com/rbsec/sslscan;
-            license = licenses.gpl3;
+            license = licenses.gpl3Only;
             maintainers = with maintainers; [ case ];
           };
         });
       };
 
       packages = forAllSystems (system: {
-        inherit (nixpkgsFor.${system}) sslscan;
+        inherit (nixpkgsFor.${system}) sslscan-zlib;
       });
 
-      defaultPackage = forAllSystems (system: self.packages.${system}.sslscan);
+      defaultPackage = forAllSystems (system: self.packages.${system}.sslscan-zlib);
 
       devShell = forAllSystems (system:
         with nixpkgsFor.${system}; pkgs.mkShell {
