@@ -45,7 +45,7 @@
 
           installPhase = ''
             mkdir -p $out/bin
-            cp sslscan $out/bin
+            cp sslscan $out/bin/sslscan-zlib
           '';
 
           meta = with lib; {
