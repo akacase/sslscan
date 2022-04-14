@@ -27,17 +27,16 @@
     in
     {
       overlay = final: prev: {
-
-        openssl = prev.openssl.overrideAttrs (old: {
+        openssl-zlib = prev.openssl.overrideAttrs (old: {
           configureFlags = old.configureFlags ++ [ "-D_FORTIFY_SOURCE=2" "-fPIC" "enable-weak-ssl-ciphers" "zlib" ];
           nativeBuildInputs = old.nativeBuildInputs ++ [ final.pkgs.zlib ];
         });
 
-        sslscan-zlib = with final; (stdenv.mkDerivation {
-          name = "sslscan-zlib";
+        sslscan = with final; (stdenv.mkDerivation {
+          name = "sslscan";
           src = sslscan-src;
           nativeBuildInputs = [ gnumake gcc ];
-          buildInputs = [ openssl glibc ];
+          buildInputs = [ openssl-zlib glibc ];
 
           buildPhase = ''
             make 
@@ -45,7 +44,7 @@
 
           installPhase = ''
             mkdir -p $out/bin
-            cp sslscan $out/bin/sslscan-zlib
+            cp sslscan $out/bin/sslscan
           '';
 
           meta = with lib; {
@@ -58,10 +57,10 @@
       };
 
       packages = forAllSystems (system: {
-        inherit (nixpkgsFor.${system}) sslscan-zlib;
+        inherit (nixpkgsFor.${system}) sslscan;
       });
 
-      defaultPackage = forAllSystems (system: self.packages.${system}.sslscan-zlib);
+      defaultPackage = forAllSystems (system: self.packages.${system}.sslscan);
 
       devShell = forAllSystems (system:
         with nixpkgsFor.${system}; pkgs.mkShell {
