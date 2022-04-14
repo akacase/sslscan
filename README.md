@@ -7,3 +7,21 @@ This is a flake for `sslscan`, it provides an override for OpenSSL with `zlib`, 
 to review the source and do additional development against the current pin:
 
 `nix develop github:akacase/sslscan`
+
+to use in a flake:
+
+```nix
+# add to inputs
+  inputs = {
+    sslscan = {
+      url = "github:akacase/sslscan";
+    };
+  };
+  
+  # add to outputs
+  outputs = { self, nixpkgs, stable, flake-utils, sslscan }:
+
+  # add the overlay
+  overlays = [ sslscan.overlay ];
+
+  # and reference the sslscan pkg
