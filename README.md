@@ -13,15 +13,16 @@ to use in a flake:
 ```nix
 # add to inputs
   inputs = {
-    sslscan = {
+    sslscan-flake = {
       url = "github:akacase/sslscan";
     };
   };
   
   # add to outputs
-  outputs = { self, nixpkgs, stable, flake-utils, sslscan }:
+  outputs = { self, nixpkgs, stable, flake-utils, sslscan-flake }:
 
   # add the overlay
-  overlays = [ sslscan.overlay ];
+  overlays = [ sslscan-flake.overlay ];
 
-  # and reference the sslscan-zlib pkg
+  # and reference the sslscan pkg
+  pkgs.sslscan
