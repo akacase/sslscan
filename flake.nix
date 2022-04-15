@@ -29,7 +29,7 @@
           name = "sslscan-zlib";
           src = sslscan-src;
           nativeBuildInputs = [ gnumake gcc ];
-          buildInputs = [ openssl-zlib glibc ];
+          buildInputs = [ openssl-zlib ];
 
           buildPhase = ''
             make 
@@ -57,7 +57,6 @@
             openssl-zlib
             gcc
             gnumake
-            glibc
             zlib
           ];
           shellHook = ''
