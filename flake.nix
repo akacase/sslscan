@@ -2,7 +2,7 @@
   description = "sslscan";
 
   inputs = {
-    nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
+    nixpkgs.url = github:NixOS/nixpkgs/nixos-21.11;
     utils.url = "github:numtide/flake-utils";
     sslscan-src = {
       url = "github:rbsec/sslscan";
@@ -25,8 +25,8 @@
           })
         ];
         };
-        sslscan-zlib = (with pkgs; stdenv.mkDerivation {
-          name = "sslscan-zlib";
+        sslscan = (with pkgs; stdenv.mkDerivation {
+          name = "sslscan";
           src = sslscan-src;
           nativeBuildInputs = [ gnumake gcc ];
           buildInputs = [ openssl-zlib ];
@@ -37,7 +37,7 @@
 
           installPhase = ''
             mkdir -p $out/bin
-            cp sslscan $out/bin/sslscan-zlib
+            cp sslscan $out/bin/sslscan
           '';
 
           meta = with lib; {
@@ -50,8 +50,8 @@
       in
       rec
       {
-        defaultPackage = sslscan-zlib;
-        packages.${system} = sslscan-zlib;
+        defaultPackage = sslscan;
+        packages.${system} = sslscan;
         devShell = pkgs.mkShell {
           buildInputs = with pkgs; [
             openssl-zlib
@@ -71,8 +71,8 @@
         nativeBuildInputs = old.nativeBuildInputs ++ [ final.pkgs.zlib ];
       });
 
-      sslscan-zlib = with final; (stdenv.mkDerivation {
-        name = "sslscan-zlib";
+      sslscan = with final; (stdenv.mkDerivation {
+        name = "sslscan";
         src = sslscan-src;
         nativeBuildInputs = [ gnumake gcc ];
         buildInputs = [ openssl-zlib glibc ];
@@ -83,7 +83,7 @@
 
         installPhase = ''
           mkdir -p $out/bin
-          cp sslscan $out/bin/sslscan-zlib
+          cp sslscan $out/bin/sslscan
         '';
 
         meta = with lib; {
