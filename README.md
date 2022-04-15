@@ -24,4 +24,4 @@ to use in a flake:
   # add the overlay
   overlays = [ sslscan.overlay ];
 
-  # and reference the sslscan pkg
+  # and reference the sslscan-zlib pkg
