@@ -18,7 +18,7 @@
           self.overlay
           (final: prev: {
             openssl-zlib = prev.openssl.overrideAttrs (old: {
-              pname = "openssl-zlib";
+              pname = "openssl";
               configureFlags = old.configureFlags ++ [ "-D_FORTIFY_SOURCE=2" "-fPIC" "enable-weak-ssl-ciphers" "zlib" ];
               nativeBuildInputs = old.nativeBuildInputs ++ [ final.pkgs.zlib ];
             });
@@ -67,7 +67,7 @@
       }) // {
     overlay = final: prev: {
       openssl-zlib = prev.openssl.overrideAttrs (old: {
-        pname = "openssl-zlib";
+        pname = "openssl";
         configureFlags = old.configureFlags ++ [ "-D_FORTIFY_SOURCE=2" "-fPIC" "enable-weak-ssl-ciphers" "zlib" ];
         nativeBuildInputs = old.nativeBuildInputs ++ [ final.pkgs.zlib ];
       });
