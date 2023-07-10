@@ -2,7 +2,7 @@
   description = "sslscan";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
     utils.url = "github:numtide/flake-utils";
     sslscan-src = {
       url = "github:rbsec/sslscan";
@@ -54,6 +54,7 @@
         packages.${system} = sslscan;
         devShell = pkgs.mkShell {
           buildInputs = with pkgs; [
+            nixpkgs-fmt
             openssl-zlib
             gcc
             gnumake
